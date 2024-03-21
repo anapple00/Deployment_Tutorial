@@ -27,7 +27,8 @@ if st.button("Answer"):
         # preds = logits.detach().cpu().numpy()
         # pred_label_ids = np.argmax(preds, axis=0)
         # result = emotion_map[pred_label_ids]
-        print('阿原最帅')
+        # print('阿原最帅')
+        st.write('阿原最帅')
     # [today: 2, weather: 245, is 231, great: 22, !: 9877]
     # "Today weather is great!" -> [2, 245, 231, 22, 9877]
     except Exception as e:
