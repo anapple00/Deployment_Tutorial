@@ -1,5 +1,5 @@
 # 1. 在pycharm里写好代码 搞定
-# 2. 把代码推到GitHub上
+# 2. 把代码推到GitHub上 搞定
 # 3. 用streamlit cloud连接GitHub，部署程序
 import numpy as np
 import streamlit as st
@@ -19,6 +19,7 @@ if st.button("Answer"):
     try:
         # tokenize
         encoded_input = tokenizer(sentence, return_tensors='pt')
+        # predict
         outputs = model(**encoded_input)[0]
         logits = outputs[0]
         preds = logits.detach().cpu().numpy()
