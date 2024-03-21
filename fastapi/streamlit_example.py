@@ -1,28 +1,30 @@
+# 1. 在pycharm里写好代码 搞定
+# 2. 把代码推到GitHub上
+# 3. 用streamlit cloud连接GitHub，部署程序
+import numpy as np
 import streamlit as st
+from transformers import RobertaTokenizer, RobertaForSequenceClassification
 
-# markdown
-st.markdown('Streamlit Demo')
+emotion_map = {1: "Positive", 0: "Negtive"}
+tokenizer = RobertaTokenizer.from_pretrained("roberta-base")
+model = RobertaForSequenceClassification.from_pretrained("roberta-base")
 
-# 设置网页标题
-st.title('一个傻瓜式构建可视化 web的 Python 神器 -- streamlit')
+st.title("任原测试专用")
+st.write("This is a simple emotion classification model using Roberta-base")
+st.write("Test Sentence below...")
 
-# 展示一级标题
-st.header('1. 安装')
+sentence = st.text_input("Enter a sentence", "Type whatever you want here")
 
-st.text('和安装其他包一样，安装 streamlit 非常简单，一条命令即可')
-code1 = '''pip3 install streamlit'''
-st.code(code1, language='bash')
-
-# 展示一级标题
-st.header('2. 使用')
-
-# 展示二级标题
-st.subheader('2.1 生成 Markdown 文档')
-
-# 纯文本
-st.text('导入 streamlit 后，就可以直接使用 st.markdown() 初始化')
-
-# 展示代码，有高亮效果
-code2 = '''import streamlit as st
-st.markdown('Streamlit Demo')'''
-st.code(code2, language='python')
+if st.button("Answer"):
+    try:
+        # tokenize
+        encoded_input = tokenizer(sentence, return_tensors='pt')
+        outputs = model(**encoded_input)[0]
+        logits = outputs[0]
+        preds = logits.detach().cpu().numpy()
+        pred_label_ids = np.argmax(preds, axis=0)
+        result = emotion_map[pred_label_ids]
+    # [today: 2, weather: 245, is 231, great: 22, !: 9877]
+    # "Today weather is great!" -> [2, 245, 231, 22, 9877]
+    except Exception as e:
+        st.error(f"Error answering the question: {str(e)}")
