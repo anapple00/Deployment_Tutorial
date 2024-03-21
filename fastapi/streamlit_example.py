@@ -1,10 +1,13 @@
 # 1. 在pycharm里写好代码 搞定
 # 2. 把代码推到GitHub上 搞定
 # 3. 用streamlit cloud连接GitHub，部署程序
+import os
+
 import numpy as np
 import streamlit as st
 from transformers import RobertaTokenizer, RobertaForSequenceClassification
 
+os.environ['HTTPS_PROXY'] = "https://orangelgy_qifei:123tiancai@global-jp.link.ac.cn:443"
 emotion_map = {1: "Positive", 0: "Negtive"}
 tokenizer = RobertaTokenizer.from_pretrained("roberta-base")
 model = RobertaForSequenceClassification.from_pretrained("roberta-base")
