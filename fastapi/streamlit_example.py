@@ -13,12 +13,12 @@ logger.info("loading tokenizer ready...")
 model = RobertaForSequenceClassification.from_pretrained("roberta-base").to('cpu')
 logger.info("loading model ready...")
 
-
-st.title("任原测试专用")
+st.balloons()
+st.title("噔噔蹬蹬！宝宝请~开始测试！")
 st.write("This is a simple emotion classification model using Roberta-base")
 st.write("Test Sentence below...")
 
-sentence = st.text_input("Enter a sentence", "Type whatever you want here")
+sentence = st.text_input("Enter a sentence", "宝，在这里输入你想测试的句子哦")
 
 if st.button("Answer"):
     try:
