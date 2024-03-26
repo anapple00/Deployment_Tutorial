@@ -6,3 +6,8 @@ torch==2.2.1
 pydantic==2.6.4
 numpy==1.26.4
 transformers==4.38.2
+tqdm==4.66.2
+jsonlines==4.0.0
+pandas==2.2.1
+scikit-learn==1.4.1.post1
+sacrebleu==2.4.1
