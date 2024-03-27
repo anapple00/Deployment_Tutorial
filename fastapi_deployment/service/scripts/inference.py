@@ -1,13 +1,13 @@
 """
 0. 实例化任务所需的tokenizer和model
 1. 解析swagger接收的InputSchema格式的数据
-2，把第1步解析的数据加载InputExample类，再对其中的文本做tokenization并用InputFeatures类接收
-3。用CustomDataset类接收第2步得到的InputFeatures类数据
-4。实例化DataCollator，用于给CustomDataset中的数据加padding
-5. 把第步得到的CustomDataset放到DataLoader里，并把第4步得到的DataCollator作为参数传入
-6. 用for循环训练DataLoader 中的数据(只有1条)
+2. 把第1步解析的数据加载InputExample类，再对其中的文本做tokenization并用InputFeatures类接收
+3. 用CustomDataset类接收第2步得到的InputFeatures类数据
+4. 实例化DataCollator，用于给CustomDataset中的数据加padding
+5. 把第3步得到的CustomDataset放到DotaLoader里，并把第4步得到的DataCollator作为参数传入
+6，用for循环训练DataLoader中的数据(只有1条)，
 7. 用模型预测结果
-8. 用model中带的id2Label字典解析预测的结果
+8. model中带的id2label字典解析预测的结果
 """
 import numpy as np
 import torch
