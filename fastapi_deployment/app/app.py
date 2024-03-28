@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.exceptions import RequestValidationError
 
 middleware = []
 app = FastAPI(
@@ -16,4 +17,16 @@ def register_router(_app):
     _app.include_router(seg2seg_router, prefix="/api/test")
 
 
+def register_exception_handler(_app):
+    from fastapi_deployment.app.api.exception import (internal_server_error_handler,
+                                                      http_exception_handler,
+                                                      request_validation_exception_handler,
+                                                      )
+    _app.add_exception_handler(Exception, internal_server_error_handler)
+    _app.add_exception_handler(HTTPException, http_exception_handler)
+    # _app.add_exception_handler(ApiException, api_exception_handler)
+    _app.add_exception_handler(RequestValidationError, request_validation_exception_handler)
+
+
 register_router(app)
+register_exception_handler(app)
