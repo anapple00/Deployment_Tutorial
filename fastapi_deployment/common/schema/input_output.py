@@ -3,6 +3,7 @@ from pydantic import BaseModel, Extra
 
 class InputSchema(BaseModel, extra=Extra.forbid):
     query: str
+    model_type: str
     task: str
     dataset: str
 

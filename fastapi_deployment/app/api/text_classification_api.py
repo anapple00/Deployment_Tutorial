@@ -15,6 +15,7 @@ router = APIRouter(tags=["Available AI Models"])
 @router.post("/text classification", response_model=OutputSchema)
 def run_text_classification_service(data: InputSchema):
     args.query = data.query
+    args.model_type = data.model_type
     args.task_name = data.task
     args.dataset_name = data.dataset
     logger.debug(f"[Start Task]: {''.join(args.task_name.split(' ')).title()}")
@@ -22,8 +23,9 @@ def run_text_classification_service(data: InputSchema):
 
     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
     args.device = device
+    args.n_gpu = torch.cuda.device_count()
 
-    config_class, model_class, tokenizer_class = MODEL_CLASSES['roberta']
+    config_class, model_class, tokenizer_class = MODEL_CLASSES[args.model_type]
     save_path = os.path.join(args.output_dir, args.task_name)
     tokenizer = tokenizer_class.from_pretrained(save_path,
                                                 do_lower_case=args.do_lower_case)
