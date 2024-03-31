@@ -1,4 +1,4 @@
-from fastapi.common.schema.input_features import InputFeatures
+from common.schema.input_features import InputFeatures
 from torch.utils.data import Dataset
 
 

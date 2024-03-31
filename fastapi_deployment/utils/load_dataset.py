@@ -6,10 +6,10 @@ import torch
 from loguru import logger
 from tqdm import tqdm
 
-from fastapi.common.schema.class_mapping import DATASET_TYPES
-from fastapi.common.schema.input_features import InputFeatures
-from fastapi.utils.dataset import CustomDataset
-from fastapi.utils.preprocess.base import InputExample
+from common.schema.class_mapping import DATASET_TYPES
+from common.schema.input_features import InputFeatures
+from utils.dataset import CustomDataset
+from utils.preprocess.base import InputExample
 
 
 def load_and_cache_examples(args, tokenizer, evaluate=False, predict=False) -> CustomDataset:

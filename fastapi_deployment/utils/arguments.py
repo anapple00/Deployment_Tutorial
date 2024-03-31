@@ -1,6 +1,6 @@
 import argparse
 
-from fastapi.common.schema.class_mapping import MODEL_CLASSES, TASK_TYPES, DATASET_TYPES
+from common.schema.class_mapping import MODEL_CLASSES, TASK_TYPES, DATASET_TYPES
 
 
 def get_args():

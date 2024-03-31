@@ -2,7 +2,7 @@ import json
 import os
 from dataclasses import dataclass
 
-from fastapi.utils.preprocess.base import DataProcessor, InputExample
+from utils.preprocess.base import DataProcessor, InputExample
 
 
 @dataclass

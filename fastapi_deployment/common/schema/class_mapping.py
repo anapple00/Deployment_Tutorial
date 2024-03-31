@@ -4,7 +4,7 @@ from transformers import (
     AutoConfig, AutoModelForSeq2SeqLM, AutoTokenizer,
 )
 
-from fastapi.utils.preprocess import MovieCommentsProcessor, BiologyProcessor, TranslationProcessor
+from utils.preprocess import MovieCommentsProcessor, BiologyProcessor, TranslationProcessor
 
 MODEL_CLASSES = {
     'bert': (BertConfig, BertForSequenceClassification, BertTokenizer),

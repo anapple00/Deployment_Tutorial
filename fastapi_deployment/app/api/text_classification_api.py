@@ -4,10 +4,10 @@ import torch
 from fastapi import APIRouter
 from loguru import logger
 
-from fastapi_deployment.common.schema.class_mapping import MODEL_CLASSES
-from fastapi_deployment.common.schema.input_output import InputSchema, OutputSchema
-from fastapi_deployment.service.scripts.inference import predict
-from fastapi_deployment.utils.arguments import args
+from common.schema.class_mapping import MODEL_CLASSES
+from common.schema.input_output import InputSchema, OutputSchema
+from service.scripts.inference import predict
+from utils.arguments import args
 
 router = APIRouter(tags=["Available AI Models"])
 

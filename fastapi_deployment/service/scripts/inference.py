@@ -16,8 +16,8 @@ from torch.utils.data import SequentialSampler, DataLoader
 from tqdm import tqdm
 from transformers import DataCollatorWithPadding, DataCollatorForTokenClassification, DataCollatorForSeq2Seq
 
-from fastapi.utils.helper import decode_ner_output
-from fastapi.utils.load_dataset import load_and_cache_examples
+from utils.helper import decode_ner_output
+from utils.load_dataset import load_and_cache_examples
 
 
 def predict(args, model, tokenizer, prefix=""):
@@ -58,9 +58,9 @@ def predict(args, model, tokenizer, prefix=""):
                 generated_tokens = model.generate(max_length=128).cpu().numpy()
             else:
                 outputs = model(**inputs)
-                logits = outputs[1] if len(outputs) > 1 else outputs[0]
+                logits = outputs.logits
                 preds = logits.detach().cpu().numpy()
-                pred_label_ids = np.argmax(preds, axis=2) if len(outputs) > 1 else np.argmax(preds, axis=1)
+                pred_label_ids = np.argmax(preds, axis=2) if len(logits.size()) == 3 else np.argmax(preds, axis=1)
 
         if args.task_name == 'seg2seq':
             decoded_preds = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
