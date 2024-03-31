@@ -32,7 +32,7 @@ def predict(args, model, tokenizer, prefix=""):
     else:
         raise KeyError("Unknown task name ...")
 
-    args, eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
+    args.eval_batch_size = args.per_gpu_eval_batch_size * max(1, args.n_gpu)
     # Note that DistributedSampler samples randomly
     pred_sampler = SequentialSampler(pred_dataset)
     pred_dataloader = DataLoader(pred_dataset,
@@ -46,7 +46,7 @@ def predict(args, model, tokenizer, prefix=""):
     # Predict!
     logger.info(f"***** Running {prefix} *****")
     logger.info(f"Num examples {len(pred_dataset)}")
-    logger.info(f"Batch size {args, eval_batch_size}")
+    logger.info(f"Batch size {args.eval_batch_size}")
     pred_label_ids = None
     response = ""  # 构造的AI字符串形式输出
     for batch in tqdm(pred_dataloader, desc="predicting"):
