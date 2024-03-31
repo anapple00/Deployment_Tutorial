@@ -55,24 +55,24 @@ def predict(args, model, tokenizer, prefix=""):
 
         with torch.no_grad():
             if args.task_name == 'seq2seq':
-                generated_tokens = model.generate(max_length=128).cpu().numpy()
+                generated_tokens = model.generate(**inputs, max_length=128).cpu().numpy()
             else:
                 outputs = model(**inputs)
                 logits = outputs.logits
                 preds = logits.detach().cpu().numpy()
                 pred_label_ids = np.argmax(preds, axis=2) if len(logits.size()) == 3 else np.argmax(preds, axis=1)
 
-        if args.task_name == 'seg2seq':
+        if args.task_name == 'seq2seq':
             decoded_preds = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
             result = decoded_preds[0]
             response = f"The translation: {result}"
         elif args.task_name == 'text_classification':
             pred_label_ids = pred_label_ids.tolist()[0]
             result = model.config.id2label.get(pred_label_ids, "")
-            response = f"The characteristic: {result}"
+            response = f"The characteristic is: {result}"
         elif args.task_name == 'named_entity_recognition':
             input_ids = inputs['input_ids'].tolist()
             pred_label_ids = pred_label_ids.tolist()
             result = decode_ner_output(input_ids[0], pred_label_ids[0], model.config.id2label, tokenizer)
-            response = "The entities: " + ', '.join([f'"{key}": {value}' for key, value in result.items()])
+            response = "The entity with category: " + '; '.join([f'"{key}": {value}' for key, value in result.items()])
     return response

@@ -18,7 +18,7 @@ async def run_ner_service(data: InputSchema):
     args.model_type = data.model_type
     args.task_name = data.task
     args.dataset_name = data.dataset
-    logger.debug(f"[Start Task]:{''.join(args.task_name.split('_')).title()}")
+    logger.debug(f"[Start Task]: {''.join(args.task_name.split('_')).title()}")
     logger.info(f"Input query: {args.query}")
 
     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")

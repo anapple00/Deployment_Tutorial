@@ -12,13 +12,13 @@ from utils.arguments import args
 router = APIRouter(tags=["Available AI Models"])
 
 
-@router.post("/text classification", response_model=OutputSchema)
-def run_text_classification_service(data: InputSchema):
+@router.post("/text_classification", response_model=OutputSchema)
+async def run_text_classification_service(data: InputSchema):
     args.query = data.query
     args.model_type = data.model_type
     args.task_name = data.task
     args.dataset_name = data.dataset
-    logger.debug(f"[Start Task]: {''.join(args.task_name.split(' ')).title()}")
+    logger.debug(f"[Start Task]: {''.join(args.task_name.split('_')).title()}")
     logger.info(f"Input query: {args.query}")
 
     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")

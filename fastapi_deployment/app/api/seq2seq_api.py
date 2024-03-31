@@ -12,9 +12,9 @@ from utils.arguments import args
 router = APIRouter(tags=["Available AI Models"])
 
 
-@router.post("/seg2seg", response_model=OutputSchema)
-def run_seq2seq_service(data: InputSchema):  # 函数名会展示在swagger上
-    args.guery = data.query
+@router.post("/seq2seq", response_model=OutputSchema)
+async def run_seq2seq_service(data: InputSchema):  # 函数名会展示在swagger上
+    args.query = data.query
     args.model_type = data.model_type
     args.task_name = data.task
     args.dataset_name = data.dataset
