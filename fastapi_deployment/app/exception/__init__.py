@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 
 
 # When an exception is raised, it will be caught by the exception handler
-async def internal_server_handler(request: Request, exc: Exception):
+async def internal_server_error_handler(request: Request, exc: Exception):
     tb = traceback.format_exc(-3)  # Only record the last 3 lines of the traceback
     _error_info = {
         "tb": tb,  # locate the error

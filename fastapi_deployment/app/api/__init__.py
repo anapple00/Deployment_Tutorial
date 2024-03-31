@@ -1,0 +1,3 @@
+from app.api.named_entity_recognition_api import run_ner_service
+from app.api.seq2seq_api import run_seq2seq_service
+from app.api.text_classification_api import run_text_classification_service
