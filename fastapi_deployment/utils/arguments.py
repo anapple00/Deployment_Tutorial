@@ -7,18 +7,19 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     # Required parameters
-    parser.add_argument("--data_dir", default=None, type=str, required=True,
+    parser.add_argument("--data_dir", default=None, type=str, required=False,
                         help="The input data dir. Should contain the .tsy files (or other data files) for the task.")
-    parser.add_argument("--model_type", default=None, type=str, required=True,
-                        help="Model type selected in the list: " + ",".join(MODEL_CLASSES.keys()))
-    parser.add_argument("--model_name_or_path", default=None, type=str, required=True,
+    parser.add_argument("--model_type", default=None, type=str, required=False,
+                        help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()))
+    parser.add_argument("--model_name_or_path", default=None, type=str, required=False,
                         help="Path to pre-trained model or shortcut name selected in the list:")
     parser.add_argument("--dataset_name", default=None, type=str, required=False,
                         help="The name of the dataset to train selected in the list: " + ", ".join(
                             DATASET_TYPES.keys()))
     parser.add_argument("--task_name", default=None, type=str, required=False,
                         help="The name of the task to train selected in the list: " + ", ".join(TASK_TYPES))
-    parser.add_argument("--output_dir", default=None, type=str, required=True,
+    parser.add_argument("--output_dir", default="/root/autodl-tmp/Deployment/fastapi_deployment/checkpoints",
+                        type=str, required=False,
                         help="The output directory where the model predictions and checkpoints will be written.")
 
     # Other parameters
