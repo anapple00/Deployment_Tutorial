@@ -11,3 +11,5 @@ jsonlines==4.0.0
 pandas==2.2.1
 scikit-learn==1.4.1.post1
 sacrebleu==2.4.1
+s3fs==2024.3.1
+st-files-connection==0.1.0
