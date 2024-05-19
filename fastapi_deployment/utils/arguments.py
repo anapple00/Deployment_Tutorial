@@ -83,6 +83,13 @@ def get_args():
     parser.add_argument("--local_rank", type=int, default=-1,
                         help="For distributed training; local_rank")
 
+    parser.add_argument("--local", type=bool, default=False,
+                        help="Decide implement local or cloud deployment.")
+    parser.add_argument('--aws_id', type=str, help="Amazon aws S3 bucket id")
+    parser.add_argument('--aws_key', type=str, help="Amazon aws S3 bucket key")
+    parser.add_argument('--aws_bucket', type=str, default='mydeploybucket1',
+                        help="Amazon aws S3 bucket name for deployment")
+
     args = parser.parse_args()
     return args
 
