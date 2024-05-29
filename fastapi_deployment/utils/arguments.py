@@ -1,4 +1,6 @@
 import argparse
+import os
+from pathlib import Path
 
 from common.schema.class_mapping import MODEL_CLASSES, TASK_TYPES, DATASET_TYPES
 
@@ -18,8 +20,9 @@ def get_args():
                             DATASET_TYPES.keys()))
     parser.add_argument("--task_name", default=None, type=str, required=False,
                         help="The name of the task to train selected in the list: " + ", ".join(TASK_TYPES))
-    parser.add_argument("--output_dir", default="/root/autodl-tmp/Deployment/fastapi_deployment/checkpoints",
-                        type=str, required=False,
+    parser.add_argument("--output_dir", default=Path(os.getcwd()) / 'checkpoints',  # # 获取当前工作目录路径
+                        type=str,
+                        required=False,
                         help="The output directory where the model predictions and checkpoints will be written.")
 
     # Other parameters
@@ -83,11 +86,11 @@ def get_args():
     parser.add_argument("--local_rank", type=int, default=-1,
                         help="For distributed training; local_rank")
 
-    parser.add_argument("--local", type=bool, default=False,
+    parser.add_argument("--local", type=bool, default=True,
                         help="Decide implement local or cloud deployment.")
     parser.add_argument('--aws_id', type=str, help="Amazon aws S3 bucket id")
     parser.add_argument('--aws_key', type=str, help="Amazon aws S3 bucket key")
-    parser.add_argument('--aws_bucket', type=str, default='mydeploybucket1',
+    parser.add_argument('--aws_bucket', type=str, default='mydeploybucket2',
                         help="Amazon aws S3 bucket name for deployment")
 
     args = parser.parse_args()

@@ -28,12 +28,14 @@ async def run_text_classification_service(data: InputSchema):
 
     config_class, model_class, tokenizer_class = MODEL_CLASSES[args.model_type]
     if args.local:
-        save_path = os.path.join(args.output_dir, args.task_name)
+        save_path = args.output_dir / args.task_name
         tokenizer = tokenizer_class.from_pretrained(save_path,
                                                     do_lower_case=args.do_lower_case)
         logger.info(f"Predicting the following checkpoints: {save_path}")
         model = model_class.from_pretrained(save_path)
     else:
+        from aws_secrets import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+        args.aws_id, args.aws_key = AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
         s3 = boto3.client(
             's3',
             aws_access_key_id=args.aws_id,
