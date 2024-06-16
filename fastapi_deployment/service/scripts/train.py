@@ -22,11 +22,11 @@ from torch.utils.data import RandomSampler, DataLoader, DistributedSampler
 from tqdm import trange, tqdm
 from transformers import DataCollatorWithPadding, DataCollatorForTokenClassification, DataCollatorForSeq2Seq
 
-from fastapi.common.schema.class_mapping import MODEL_CLASSES, DATASET_TYPES, TASK_TYPES
-from fastapi.service.scripts.evaluate import evaluate
-from fastapi.utils.arguments import args
-from fastapi.utils.helper import get_optimizer_and_scheduler
-from fastapi.utils.load_dataset import load_and_cache_examples
+from common.schema.class_mapping import MODEL_CLASSES, DATASET_TYPES, TASK_TYPES
+from service.scripts.evaluate import evaluate
+from utils.arguments import args
+from utils.helper import get_optimizer_and_scheduler
+from utils.load_dataset import load_and_cache_examples
 
 
 def set_seed(args):
@@ -210,7 +210,9 @@ if __name__ == "__main__":
 
     config_class, model_class, tokenizer_class = MODEL_CLASSES[args.model_type.lower()]
     processor = DATASET_TYPES[args.dataset_name]()
-    tag_2_ids, ids_2_tags = processor.get_labels(Path(args.data_dir) / args.task_name / args.dataset_name)
+    tag_2_ids, ids_2_tags = processor.get_labels(
+        Path(os.path.join(args.root_path, "data")) / args.task_name / args.dataset_name
+    )
     num_labels = len(tag_2_ids.keys())
     config = config_class.from_pretrained(args.config_name if args.config_name else args.model_name_or_path,
                                           num_labels=num_labels,
@@ -257,7 +259,7 @@ if __name__ == "__main__":
         # Save a trained model, configuration and tokenizer using `save_pretrained()`.
         # They can then be reloaded using `from_pretrained()`.
         model_to_save = model.module if hasattr(model,
-                                                ' module') else model  # Take care of distributed/parallel
+                                                'module') else model  # Take care of distributed/parallel
         model_to_save.save_pretrained(save_path)
         tokenizer.save_pretrained(save_path)
         # Good practice: save your training arguments together with the trained model

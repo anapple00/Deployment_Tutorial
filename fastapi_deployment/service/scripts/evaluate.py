@@ -9,8 +9,8 @@ from torch.utils.data import SequentialSampler, DataLoader
 from tqdm import tqdm
 from transformers import DataCollatorWithPadding, DataCollatorForTokenClassification, DataCollatorForSeq2Seq
 
-from fastapi.service.metrics.metrics import calculate_metrics
-from fastapi.utils.load_dataset import load_and_cache_examples
+from service.metrics.metrics import calculate_metrics
+from utils.load_dataset import load_and_cache_examples
 
 bleu = BLEU(tokenize='zh')
 

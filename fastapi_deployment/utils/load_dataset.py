@@ -49,17 +49,18 @@ def load_and_cache_examples(args, tokenizer, evaluate=False, predict=False) -> C
         dataset = CustomDataset(features)
         return dataset
 
-    cached_file_dir = Path(args.data_dir) / task / dataset_name
+    data_dir = os.path.join(args.root_path, "data")
+    cached_file_dir = Path(data_dir) / task / dataset_name
     cached_file_path = cached_file_dir / ('_'.join(['cached', exec_model, dataset_name]) + '.pkl')
     if os.path.exists(cached_file_path) and not args.overwrite_cache:
         logger.info(f"Loading features from cached file {cached_file_path}")
         features = pickle.load(open(cached_file_path, 'rb'))
     else:
-        logger.info(f"Creating features from dataset file at {args.data_dir}")
+        logger.info(f"Creating features from dataset file at {data_dir}")
         if evaluate:
-            examples = processor.get_examples(args.data_dir, dataset_name, 'valid')
+            examples = processor.get_examples(data_dir, task, dataset_name, 'valid')
         else:
-            examples = processor.get_examples(args.data_dir, dataset_name, 'train')
+            examples = processor.get_examples(args.data_dir, task, dataset_name, 'train')
         features = convert_examples_to_features(examples,
                                                 tokenizer,
                                                 max_length=tokenizer.model_max_length

@@ -19,9 +19,9 @@ def register_router(_app):
 
 def register_exception_handler(_app):
     from app.exception import (internal_server_error_handler,
-                               http_exception_handler,
-                               request_validation_exception_handler,
-                               )
+                                                  http_exception_handler,
+                                                  request_validation_exception_handler,
+                                                  )
     _app.add_exception_handler(Exception, internal_server_error_handler)
     _app.add_exception_handler(HTTPException, http_exception_handler)
     # _app.add_exception_handler(ApiException, api_exception_handler)

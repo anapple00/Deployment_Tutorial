@@ -1,1 +1,2 @@
 fastapi_deployment/aws_secrets.py
+fastapi_deployment/local_config.py

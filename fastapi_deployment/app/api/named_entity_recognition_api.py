@@ -1,4 +1,5 @@
 import boto3
+import time
 import torch
 from fastapi import APIRouter
 from loguru import logger
@@ -41,21 +42,23 @@ async def run_ner_service(data: InputSchema):
         )
         tokenizer_config = s3.get_object(Bucket=args.aws_bucket, Key=f"fastapi/{args.task_name}/tokenizer_config.json")[
             'Body'].read().decode('utf-8')
-        logger.debug(f"Got tokenizer cache in AWS s3")
+        logger.debug(f"Successfully got tokenizer cache in AWS s3")
         config = s3.get_object(Bucket=args.aws_bucket, Key=f"fastapi/{args.task_name}/config.json")[
             'Body'].read().decode('utf-8')
-        logger.debug(f"Got config cache in AWS s3")
+        logger.debug(f"Successfully got config cache in AWS s3")
         model_checkpoint = s3.get_object(Bucket=args.aws_bucket, Key=f"fastapi/{args.task_name}/model.safetensors")[
             'Body'].read().decode('utf-8')
-        logger.debug(f"Got model checkpoints in AWS s3")
+        logger.debug(f"Successfully got model checkpoints in AWS s3")
 
         tokenizer = tokenizer_class.from_pretrained(tokenizer_config,
                                                     do_lower_case=args.do_lower_case)
         model = model_class.from_pretrained(model_checkpoint, config=config)
 
     model.to(args.device)
-
+    start = time.time()
     prediction = predict(args, model, tokenizer, prefix="predict")
+    end = time.time()
+    logger.debug(f"Prediction cost: {round(end - start)}s")
     result_schema = OutputSchema(response=prediction)
 
     return result_schema
