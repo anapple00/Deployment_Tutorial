@@ -16,10 +16,12 @@ from torch.utils.data import SequentialSampler, DataLoader
 from tqdm import tqdm
 from transformers import DataCollatorWithPadding, DataCollatorForTokenClassification, DataCollatorForSeq2Seq
 
+from utils.decorator import timer
 from utils.helper import decode_ner_output
 from utils.load_dataset import load_and_cache_examples
 
 
+@timer
 def predict(args, model, tokenizer, prefix=""):
     pred_dataset = load_and_cache_examples(args, tokenizer, predict=True)
 

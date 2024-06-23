@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import boto3
 import torch
@@ -28,7 +28,7 @@ async def run_text_classification_service(data: InputSchema):
 
     config_class, model_class, tokenizer_class = MODEL_CLASSES[args.model_type]
     if args.local:
-        save_path = args.output_dir / args.task_name
+        save_path = Path(args.output_dir) / args.task_name
         tokenizer = tokenizer_class.from_pretrained(save_path,
                                                     do_lower_case=args.do_lower_case)
         logger.info(f"Predicting the following checkpoints: {save_path}")
@@ -53,7 +53,6 @@ async def run_text_classification_service(data: InputSchema):
         model = model_class.from_pretrained(model_checkpoint, config=config)
 
     model.to(args.device)
-
     prediction = predict(args, model, tokenizer, prefix="predict")
     result_schema = OutputSchema(response=prediction)
 
