@@ -1,11 +1,11 @@
-FROM python:3.9.7
+FROM python:3.10.14
 
-WORKDIR /root/autodl-tmp/Deployment
+WORKDIR .
 
-COPY . .
+COPY ./requirements.txt ./requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-EXPOSE 6005
+COPY ./fastapi_deployment ./fastapi_deployment
 
-CMD ["uvicorn", "app", "--host", "0.0.0.0", "--post", "6005"]
+CMD ["python", "fastapi_deployment/main.py"]
